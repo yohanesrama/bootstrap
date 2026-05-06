@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MORTAVIA — Cyber Gold Luxury</title>
+
+    <!-- FONT -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- CART PANEL & OVERLAY -->
+    <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
+    <div id="cartPanel" class="cart-panel">
+        <h2>Keranjang</h2>
+        <div id="cartItems"></div>
+    </div>
+
+    <!-- VIDEO -->
+    <video class="bg-video-fixed" autoplay muted loop playsinline>
+        <source src="aa.mp4" type="video/mp4">
+    </video>
+
+    <div class="global-overlay"></div>
+
+    <!-- NAVBAR -->
+    <header class="nav">
+        <a href="#" class="brand">MORTAVIA</a>
+        <nav class="nav-right">
+            <a href="#collection">Collection</a>
+            <a href="#about">About</a>
+            <a href="#contact" class="cta">Contact</a>
+            <a href="javascript:void(0)" onclick="toggleCart()" class="btn btn-primary">🛒 Cart</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <h1 class="hero-title">MORTAVIA<span class="accent">.</span></h1>
+            <p class="hero-sub">Penentu Akhir</p>
+            <div class="hero-actions">
+                <a href="#collection" class="btn btn-primary">Explore Collection</a>
+                <a href="#about" class="btn btn-ghost">Our Story</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- COLLECTION -->
+    <section id="collection" class="section collection">
+        <div class="container">
+            <h2>Collection</h2>
+
+            <!-- CAROUSEL -->
+            <div class="carousel">
+                <div class="carousel-track">
+                    <div class="carousel-slide" style="background-image:url('KAOSs.jpeg')"></div>
+                    <div class="carousel-slide" style="background-image:url('gelang.png')"></div>
+                    <div class="carousel-slide" style="background-image:url('cincin.png')"></div>
+                </div>
+                <button class="carousel-btn prev">&lt;</button>
+                <button class="carousel-btn next">&gt;</button>
+            </div>
+
+            <!-- GRID -->
+            <div id="productGrid" class="grid-cards"></div>
+
+            <!-- BUTTON -->
+            <div style="text-align:center; margin-top:40px;">
+                <a href="catalog.html" class="btn btn-primary">View More Products</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about">
+        <div class="container about-custom">
+            <div class="about-text">
+                <h2>MORTAVIA</h2>
+                <p>MORTAVIA lahir dari perpaduan makna keabadian dan transformasi.</p>
+                <p>Setiap individu memiliki siklus untuk tumbuh dan bangkit.</p>
+                <p>Ular melilit melambangkan "The Cycle of Greatness".</p>
+            </div>
+            <div class="about-image">
+                <img src="logor.jpeg" alt="Mortavia">
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+        <div class="container contact-wrap">
+            <form class="form-panel">
+                <h3>Kirim Pesan</h3>
+                <input type="text" placeholder="Nama" required>
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Pesan..." rows="5" required></textarea>
+                <button class="btn btn-primary">Kirim</button>
+            </form>
+
+            <div class="contact-info">
+                <h4>Studio</h4>
+                <p>Klaten, Indonesia</p>
+                <p>Email: yoyok@kalcer.id</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <small>© 2026 MORTAVIA<br>Born to Rise Again</small>
+            <div class="footer-line"></div>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="product-detail">
+                <div class="product-image">
+                    <img id="productImg">
+                </div>
+                <div class="product-info">
+                    <h1 id="productTitle"></h1>
+                    <div id="productPrice" class="price"></div>
+                    <p id="productDesc"></p>
+                    <div style="margin-top:20px;">
+                        <button id="addToCart" class="btn btn-primary">+ Keranjang</button>
+                        <button id="buyNow" class="btn btn-ghost">Beli</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

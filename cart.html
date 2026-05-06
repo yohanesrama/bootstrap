@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang - MORTAVIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cart-item {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background: var(--panel);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .cart-info {
+            flex: 1;
+        }
+        .cart-qty {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .qty-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="nav">
+        <a href="index.html" class="brand">MORTAVIA</a>
+        <nav class="nav-right">
+            <a href="catalog.html">Catalog</a>
+            <a href="index.html" class="btn btn-ghost">Back to Home</a>
+        </nav>
+    </header>
+
+    <section class="section" style="margin-top: 100px;">
+        <div class="container">
+            <h1 style="font-family: 'Playfair Display'; margin-bottom: 40px;">Shopping Cart</h1>
+            
+            <div id="cartItemsList">
+                <!-- Items will be rendered here -->
+            </div>
+
+            <div id="cartSummary" style="margin-top: 40px; text-align: right; display: none;">
+                <h2 id="grandTotal" style="margin-bottom: 20px;">Total: Rp 0</h2>
+                <a href="checkout.html" class="btn btn-primary" style="padding: 15px 40px; font-size: 18px;">Proceed to Checkout</a>
+            </div>
+
+            <div id="emptyMessage" style="text-align: center; padding: 100px 0; display: none;">
+                <p style="font-size: 20px; margin-bottom: 30px;">Your cart is empty.</p>
+                <a href="catalog.html" class="btn btn-primary">Go Shopping</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function renderCart() {
+            const list = document.getElementById("cartItemsList");
+            const summary = document.getElementById("cartSummary");
+            const empty = document.getElementById("emptyMessage");
+            const grandTotal = document.getElementById("grandTotal");
+
+            list.innerHTML = "";
+            let total = 0;
+
+            if (cart.length === 0) {
+                summary.style.display = "none";
+                empty.style.display = "block";
+                return;
+            }
+
+            summary.style.display = "block";
+            empty.style.display = "none";
+
+            cart.forEach(item => {
+                const price = parseInt(item.price.replace(/\D/g, '')) || 0;
+                total += price * item.qty;
+
+                const div = document.createElement("div");
+                div.className = "cart-item";
+                div.innerHTML = `
+                    <img src="${item.img}" alt="${item.title}">
+                    <div class="cart-info">
+                        <h3 style="color: #fff; margin-bottom: 5px;">${item.title}</h3>
+                        <p style="color: var(--gold-1); font-weight: 600;">Rp ${price.toLocaleString()}</p>
+                        <div class="cart-qty">
+                            <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                    <button onclick="removeItem(${item.id})" style="background: none; border: none; color: #ff4d4d; cursor: pointer; font-size: 20px;">❌</button>
+                `;
+                list.appendChild(div);
+            });
+
+            grandTotal.innerText = "Total: Rp " + total.toLocaleString();
+        }
+
+        function updateQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    removeItem(id);
+                } else {
+                    save();
+                }
+            }
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(i => i.id !== id);
+            save();
+        }
+
+        function save() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();
+        }
+
+        renderCart();
+    </script>
+</body>
+</html>

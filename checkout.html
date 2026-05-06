@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout - MORTAVIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        .input:focus {
+            border-color: var(--gold-1);
+        }
+        .input option {
+            background: #111;
+            color: #fff;
+        }
+        .order-summary {
+            background: var(--panel);
+            padding: 30px;
+            border-radius: 16px;
+            backdrop-filter: blur(14px);
+            height: fit-content;
+        }
+        @media (max-width: 900px) {
+            .checkout-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="nav">
+    <a href="index.html" class="brand">MORTAVIA</a>
+</header>
+
+<section class="section" style="margin-top: 80px;">
+    <div class="container">
+
+    <h1 style="font-family: 'Playfair Display'; margin-bottom: 10px;">Checkout</h1>
+    <p style="margin-bottom: 40px; color: var(--muted);">Complete your order details below.</p>
+
+    <div class="checkout-grid">
+
+        <!-- FORM -->
+        <div>
+            <h3 style="margin-bottom: 20px;">Shipping Information</h3>
+            <input id="nama" type="text" placeholder="Full Name" class="input">
+            <input id="alamat" type="text" placeholder="Complete Address" class="input">
+            <input id="hp" type="text" placeholder="Phone Number" class="input">
+
+            <h3 style="margin-top: 30px; margin-bottom: 20px;">Payment Method</h3>
+            <select id="metode" class="input">
+                <option value="">Select method</option>
+                <option>Transfer Bank</option>
+                <option>E-Wallet (OVO/Dana/GoPay)</option>
+                <option>COD (Cash on Delivery)</option>
+            </select>
+            
+            <div style="margin-top: 40px;">
+                <button onclick="pay()" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 16px;">Place Order Now</button>
+                <button onclick="back()" class="btn btn-ghost" style="width: 100%; margin-top: 15px; padding: 12px;">← Back to Cart</button>
+            </div>
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="order-summary">
+            <h3 style="margin-bottom: 20px;">Order Summary</h3>
+            <div id="list"></div>
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Total Amount:</span>
+                <h2 id="total" style="color: var(--gold-1);">Rp 0</h2>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</section>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let total = 0;
+    const list = document.getElementById("list");
+    const totalEl = document.getElementById("total");
+
+    // RENDER ORDER
+    if (cart.length === 0) {
+        list.innerHTML = "<p>Your cart is empty.</p>";
+        window.location.href = "index.html";
+    } else {
+        cart.forEach(item => {
+            const price = parseInt(item.price.replace(/\D/g, '')) || 0;
+            total += price * item.qty;
+
+            list.innerHTML += `
+                <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center;">
+                    <img src="${item.img}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; font-size: 14px;">${item.title}</div>
+                        <div style="font-size: 12px; color: var(--muted);">${item.qty} x Rp ${price.toLocaleString()}</div>
+                    </div>
+                    <div style="font-weight: 600; font-size: 14px;">Rp ${(price * item.qty).toLocaleString()}</div>
+                </div>
+            `;
+        });
+    }
+
+    totalEl.innerText = "Rp " + total.toLocaleString();
+
+    // PAY
+    function pay() {
+        const nama = document.getElementById("nama").value;
+        const alamat = document.getElementById("alamat").value;
+        const hp = document.getElementById("hp").value;
+        const metode = document.getElementById("metode").value;
+
+        if (!nama || !alamat || !hp || !metode) {
+            alert("Please fill in all the required fields!");
+            return;
+        }
+
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        alert("Order placed successfully! ✅\nThank you, " + nama + ". We will contact you soon.");
+        localStorage.removeItem("cart");
+        window.location.href = "index.html";
+    }
+
+    // BACK
+    function back() {
+        window.location.href = "cart.html";
+    }
+</script>
+
+</body>
+</html>

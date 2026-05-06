@@ -1,0 +1,83 @@
+<!DOCTYPE html> 
+<html lang="id"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width,initial-scale=1"> 
+<title>Catalog - MORTAVIA</title> 
+<link rel="stylesheet" href="style.css"> 
+</head> 
+
+<body> 
+
+<!-- CART PANEL & OVERLAY --> 
+<div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
+<div id="cartPanel" class="cart-panel"> 
+<h2>Keranjang</h2> 
+<div id="cartItems"></div> 
+</div> 
+
+<!-- NAVBAR --> 
+<header class="nav"> 
+<a href="index.html" class="brand">MORTAVIA</a> 
+<nav class="nav-right"> 
+<a href="index.html" class="btn btn-ghost">← Back</a> 
+<a href="javascript:void(0)" onclick="toggleCart()" class="btn btn-primary">🛒 Cart</a> 
+</nav> 
+</header> 
+
+<!-- CATALOG --> 
+<section class="section"> 
+<div class="container"> 
+
+<h2>Full Catalog</h2> 
+
+<!-- SEARCH --> 
+<div style="margin:30px 0;"> 
+<input id="searchInput" type="text" placeholder="Search product..." style="padding:12px;width:100%;border-radius:10px;border:none;"> 
+</div> 
+
+<!-- FILTER --> 
+<div style="margin-bottom:30px;"> 
+<select id="filter" style="padding:10px;border-radius:8px;background:#111;color:#fff;border:1px solid rgba(255,255,255,0.2);"> 
+<option value="all" style="background:#111;color:#fff;">All</option> 
+<option value="ring" style="background:#111;color:#fff;">Ring</option> 
+<option value="bracelet" style="background:#111;color:#fff;">Bracelet</option> 
+<option value="clothing" style="background:#111;color:#fff;">Clothing</option> 
+<option value="accessories" style="background:#111;color:#fff;">Accessories</option> 
+<option value="others" style="background:#111;color:#fff;">Others</option> 
+</select> 
+</div> 
+
+<!-- GRID --> 
+<div id="catalogGrid" class="grid-cards"></div> 
+
+</div> 
+</section> 
+
+<!-- MODAL --> 
+<div id="productModal" class="modal"> 
+<div class="modal-content"> 
+<button class="modal-close">&times;</button> 
+<div class="product-detail"> 
+<div class="product-image"> 
+<img id="productImg"> 
+</div> 
+<div class="product-info"> 
+<h1 id="productTitle"></h1> 
+<div id="productPrice" class="price"></div> 
+<p id="productDesc"></p> 
+<div style="margin-top:20px;"> 
+<button id="addToCart" class="btn btn-primary">+ Keranjang</button> 
+<button id="buyNow" class="btn btn-ghost">Beli</button> 
+</div> 
+</div> 
+</div> 
+</div> 
+</div> 
+
+<!-- SCRIPT --> 
+<script src="products.js"></script> 
+<script src="catalog.js"></script> 
+
+</body> 
+</html>
